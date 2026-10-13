@@ -1,5 +1,5 @@
 import { getLocale, getTranslations } from "next-intl/server";
-import { Badge } from "@/components/ui/badge";
+import { AmountText, StatusBadge, TransactionIcon } from "@/components/features/transaction-parts";
 import { Card, CardContent } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { formatDate, formatRupiah } from "@/lib/format";
@@ -25,15 +25,19 @@ export default async function TransactionsPage() {
             <TableBody>
               {transactions.map((tx) => (
                 <TableRow key={tx.id}>
-                  <TableCell className="font-medium">{tx.name}</TableCell>
+                  <TableCell>
+                    <div className="flex items-center gap-3">
+                      <TransactionIcon type={tx.type} />
+                      <span className="font-medium">{tx.name}</span>
+                    </div>
+                  </TableCell>
                   <TableCell>{tx.category}</TableCell>
                   <TableCell className="text-muted-foreground">{formatDate(tx.date, locale)}</TableCell>
                   <TableCell>
-                    <Badge variant={tx.status === "completed" ? "secondary" : "outline"}>{c(tx.status)}</Badge>
+                    <StatusBadge status={tx.status} label={c(tx.status)} />
                   </TableCell>
                   <TableCell className="text-right">
-                    {tx.type === "income" ? "+" : "−"}
-                    {formatRupiah(tx.amount, locale)}
+                    <AmountText type={tx.type}>{formatRupiah(tx.amount, locale)}</AmountText>
                   </TableCell>
                 </TableRow>
               ))}

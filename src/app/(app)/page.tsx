@@ -1,29 +1,14 @@
-import { ArrowDown, ArrowUp, ArrowDownRight, ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 import { getLocale, getTranslations } from "next-intl/server";
 import { CashflowChart } from "@/components/features/cashflow-chart";
+import { DeltaBadge } from "@/components/features/delta-badge";
+import { AmountText, StatusBadge, TransactionIcon } from "@/components/features/transaction-parts";
 import { Badge } from "@/components/ui/badge";
+import { buttonVariants } from "@/components/ui/button";
 import { Card, CardAction, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
-import { cn } from "@/lib/utils";
 import { formatDate, formatRupiah } from "@/lib/format";
 import { budget, cashflow, costCategories, debts, goals, kpis, transactions } from "@/lib/mock-data";
-
-function Delta({ value }: { value: number }) {
-  const up = value >= 0;
-  const Icon = up ? ArrowUpRight : ArrowDownRight;
-  return (
-    <span
-      className={cn(
-        "inline-flex items-center gap-0.5 rounded-md px-1.5 py-0.5 text-[11px] font-medium",
-        up ? "bg-emerald-50 text-emerald-700" : "bg-orange-50 text-orange-700",
-      )}
-    >
-      <Icon className="size-3" />
-      {Math.abs(value)}%
-    </span>
-  );
-}
 
 export default async function DashboardPage() {
   const t = await getTranslations("dashboard");
@@ -41,30 +26,24 @@ export default async function DashboardPage() {
         <Card className="gap-0 bg-gradient-to-br from-primary/15 via-card to-card py-0">
           <div className="flex flex-wrap items-start justify-between gap-3 p-5">
             <div className="space-y-2">
-              <Badge className="bg-primary/25 text-[10px] font-semibold tracking-wider text-primary-foreground uppercase">
-                {t("overview")}
-              </Badge>
+              <Badge variant="success">{t("overview")}</Badge>
               <p className="text-[11px] tracking-wider text-muted-foreground uppercase">{t("totalBalanceCaps")}</p>
               <p className="text-4xl font-bold tracking-tight">{rp(kpis.balance)}</p>
             </div>
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-card/80 px-3 py-1 text-xs text-muted-foreground ring-1 ring-foreground/10">
-              <span className="size-1.5 rounded-full bg-emerald-500" />
-              {t("realtime")}
-            </span>
           </div>
           <div className="grid grid-cols-1 border-t sm:grid-cols-3 sm:divide-x">
             <div className="space-y-1.5 p-4">
               <p className="text-xs text-muted-foreground">{t("monthIncome")}</p>
               <p className="text-lg font-semibold">{rp(kpis.income)}</p>
               <p className="flex items-center gap-1.5 text-[11px] text-muted-foreground">
-                <Delta value={kpis.incomeDelta} /> {t("vsLastMonth")}
+                <DeltaBadge value={kpis.incomeDelta} /> {t("vsLastMonth")}
               </p>
             </div>
             <div className="space-y-1.5 border-t p-4 sm:border-t-0">
               <p className="text-xs text-muted-foreground">{t("monthExpense")}</p>
               <p className="text-lg font-semibold">{rp(kpis.expense)}</p>
               <p className="flex items-center gap-1.5 text-[11px] text-muted-foreground">
-                <Delta value={kpis.expenseDelta} /> {t("vsLastMonth")}
+                <DeltaBadge value={kpis.expenseDelta} /> {t("vsLastMonth")}
               </p>
             </div>
             <div className="space-y-1.5 border-t p-4 sm:border-t-0">
@@ -100,42 +79,27 @@ export default async function DashboardPage() {
             <CardTitle>{t("recent")}</CardTitle>
             <CardDescription className="text-xs">{t("recentSub")}</CardDescription>
             <CardAction>
-              <Link href="/transactions" className="text-xs font-medium text-emerald-700 hover:underline">
+              <Link href="/transactions" className={buttonVariants({ variant: "ghost", size: "sm" })}>
                 {t("viewAll")}
               </Link>
             </CardAction>
           </CardHeader>
           <ul className="divide-y border-t">
-            {transactions.slice(0, 5).map((tx) => {
-              const income = tx.type === "income";
-              const Icon = income ? ArrowDown : ArrowUp;
-              return (
-                <li key={tx.id} className="flex items-center gap-3 px-4 py-3">
-                  <span
-                    className={cn(
-                      "flex size-9 shrink-0 items-center justify-center rounded-full",
-                      income ? "bg-primary/30 text-emerald-800" : "bg-orange-100 text-orange-600",
-                    )}
-                  >
-                    <Icon className="size-4" />
-                  </span>
-                  <div className="min-w-0 flex-1">
-                    <p className="truncate text-sm font-medium">{tx.name}</p>
-                    <p className="text-xs text-muted-foreground">{formatDate(tx.date, locale)}</p>
-                  </div>
-                  <Badge
-                    variant="secondary"
-                    className={cn("hidden sm:inline-flex", tx.status === "pending" && "bg-amber-100 text-amber-700")}
-                  >
-                    {c(tx.status)}
-                  </Badge>
-                  <span className={cn("w-32 text-right text-sm font-semibold", income && "text-emerald-600")}>
-                    {income ? "+" : "−"}
-                    {rp(tx.amount)}
-                  </span>
-                </li>
-              );
-            })}
+            {transactions.slice(0, 5).map((tx) => (
+              <li key={tx.id} className="flex items-center gap-3 px-4 py-3">
+                <TransactionIcon type={tx.type} />
+                <div className="min-w-0 flex-1">
+                  <p className="truncate text-sm font-medium">{tx.name}</p>
+                  <p className="text-xs text-muted-foreground">{formatDate(tx.date, locale)}</p>
+                </div>
+                <span className="hidden sm:inline-flex">
+                  <StatusBadge status={tx.status} label={c(tx.status)} />
+                </span>
+                <span className="w-32 text-right text-sm">
+                  <AmountText type={tx.type}>{rp(tx.amount)}</AmountText>
+                </span>
+              </li>
+            ))}
           </ul>
         </Card>
       </div>
@@ -163,7 +127,7 @@ export default async function DashboardPage() {
           <CardHeader>
             <CardTitle>{t("goals")}</CardTitle>
             <CardAction>
-              <Link href="/savings" className="text-xs font-medium text-emerald-700 hover:underline">
+              <Link href="/savings" className={buttonVariants({ variant: "ghost", size: "sm" })}>
                 + {t("add")}
               </Link>
             </CardAction>
