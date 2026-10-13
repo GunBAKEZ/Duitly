@@ -1,14 +1,14 @@
 import Link from "next/link";
 import { getLocale, getTranslations } from "next-intl/server";
-import { CashflowChart } from "@/components/features/cashflow-chart";
-import { DeltaBadge } from "@/components/features/delta-badge";
-import { AmountText, StatusBadge, TransactionIcon } from "@/components/features/transaction-parts";
+import { ChartAreaInteractive } from "@/components/chart-area-interactive";
+import { SectionCards } from "@/components/section-cards";
 import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
 import { Card, CardAction, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
+import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
 import { formatDate, formatRupiah } from "@/lib/format";
-import { budget, cashflow, costCategories, debts, goals, kpis, transactions } from "@/lib/mock-data";
+import { budget, costCategories, debts, goals, kpis, transactions } from "@/lib/mock-data";
 
 export default async function DashboardPage() {
   const t = await getTranslations("dashboard");
@@ -20,101 +20,28 @@ export default async function DashboardPage() {
   const sortedCosts = [...costCategories].sort((a, b) => b.value - a.value);
 
   return (
-    <div className="grid items-start gap-4 xl:grid-cols-[minmax(0,1fr)_340px]">
-      {/* Kolom kiri */}
-      <div className="flex min-w-0 flex-col gap-4">
-        <Card className="gap-0 bg-gradient-to-br from-primary/15 via-card to-card py-0">
-          <div className="flex flex-wrap items-start justify-between gap-3 p-5">
-            <div className="space-y-2">
-              <Badge variant="success">{t("overview")}</Badge>
-              <p className="text-[11px] tracking-wider text-muted-foreground uppercase">{t("totalBalanceCaps")}</p>
-              <p className="text-4xl font-bold tracking-tight">{rp(kpis.balance)}</p>
-            </div>
-          </div>
-          <div className="grid grid-cols-1 border-t sm:grid-cols-3 sm:divide-x">
-            <div className="space-y-1.5 p-4">
-              <p className="text-xs text-muted-foreground">{t("monthIncome")}</p>
-              <p className="text-lg font-semibold">{rp(kpis.income)}</p>
-              <p className="flex items-center gap-1.5 text-[11px] text-muted-foreground">
-                <DeltaBadge value={kpis.incomeDelta} /> {t("vsLastMonth")}
-              </p>
-            </div>
-            <div className="space-y-1.5 border-t p-4 sm:border-t-0">
-              <p className="text-xs text-muted-foreground">{t("monthExpense")}</p>
-              <p className="text-lg font-semibold">{rp(kpis.expense)}</p>
-              <p className="flex items-center gap-1.5 text-[11px] text-muted-foreground">
-                <DeltaBadge value={kpis.expenseDelta} /> {t("vsLastMonth")}
-              </p>
-            </div>
-            <div className="space-y-1.5 border-t p-4 sm:border-t-0">
-              <p className="text-xs text-muted-foreground">{t("activeDebt")}</p>
-              <p className="text-lg font-semibold">{rp(kpis.debt)}</p>
-              <p className="text-[11px] text-orange-600">{t("billsRegistered", { n: dueSoon.length })}</p>
-            </div>
-          </div>
-        </Card>
+    <>
+      <SectionCards
+        items={[
+          { label: t("totalBalance"), value: rp(kpis.balance), footer: t("fBalance"), hint: t("fBalanceSub") },
+          { label: t("monthIncome"), value: rp(kpis.income), delta: kpis.incomeDelta, footer: t("fIncome"), hint: t("fIncomeSub") },
+          { label: t("monthExpense"), value: rp(kpis.expense), delta: kpis.expenseDelta, footer: t("fExpense"), hint: t("fExpenseSub") },
+          { label: t("activeDebt"), value: rp(kpis.debt), footer: t("fDebt"), hint: t("fDebtSub", { n: dueSoon.length }) },
+        ]}
+      />
 
-        <Card>
-          <CardHeader>
-            <CardTitle>{t("cashflow")}</CardTitle>
-            <CardDescription className="text-xs">{t("cashflowSub")}</CardDescription>
-            <CardAction className="flex items-center gap-3 text-xs text-muted-foreground">
-              <span className="flex items-center gap-1.5">
-                <span className="size-2 rounded-sm" style={{ background: "var(--chart-3)" }} />
-                {c("expense")}
-              </span>
-              <span className="flex items-center gap-1.5">
-                <span className="size-2 rounded-sm" style={{ background: "var(--chart-1)" }} />
-                {c("income")}
-              </span>
-            </CardAction>
-          </CardHeader>
-          <CardContent>
-            <CashflowChart data={cashflow} labels={{ income: c("income"), expense: c("expense") }} locale={locale} />
-          </CardContent>
-        </Card>
+      <ChartAreaInteractive />
 
-        <Card className="gap-0 pb-0">
-          <CardHeader className="pb-3">
-            <CardTitle>{t("recent")}</CardTitle>
-            <CardDescription className="text-xs">{t("recentSub")}</CardDescription>
-            <CardAction>
-              <Link href="/transactions" className={buttonVariants({ variant: "ghost", size: "sm" })}>
-                {t("viewAll")}
-              </Link>
-            </CardAction>
-          </CardHeader>
-          <ul className="divide-y border-t">
-            {transactions.slice(0, 5).map((tx) => (
-              <li key={tx.id} className="flex items-center gap-3 px-4 py-3">
-                <TransactionIcon type={tx.type} />
-                <div className="min-w-0 flex-1">
-                  <p className="truncate text-sm font-medium">{tx.name}</p>
-                  <p className="text-xs text-muted-foreground">{formatDate(tx.date, locale)}</p>
-                </div>
-                <span className="hidden sm:inline-flex">
-                  <StatusBadge status={tx.status} label={c(tx.status)} />
-                </span>
-                <span className="w-32 text-right text-sm">
-                  <AmountText type={tx.type}>{rp(tx.amount)}</AmountText>
-                </span>
-              </li>
-            ))}
-          </ul>
-        </Card>
-      </div>
-
-      {/* Kolom kanan */}
-      <div className="flex min-w-0 flex-col gap-4">
+      <div className="grid gap-4 @3xl/main:grid-cols-2">
         <Card>
           <CardHeader>
             <CardTitle>{t("budget")}</CardTitle>
+            <CardDescription>
+              {t("budgetUsed")} {rp(budget.limit)}
+            </CardDescription>
           </CardHeader>
           <CardContent className="space-y-2">
-            <p className="text-2xl font-bold">{rp(budget.used)}</p>
-            <p className="text-xs text-muted-foreground">
-              {t("budgetUsed")} {rp(budget.limit)}
-            </p>
+            <p className="text-2xl font-semibold tabular-nums">{rp(budget.used)}</p>
             <Progress value={budgetPct} />
             <div className="flex justify-between text-xs text-muted-foreground">
               <span>{t("percentUsed", { n: budgetPct })}</span>
@@ -127,17 +54,17 @@ export default async function DashboardPage() {
           <CardHeader>
             <CardTitle>{t("goals")}</CardTitle>
             <CardAction>
-              <Link href="/savings" className={buttonVariants({ variant: "ghost", size: "sm" })}>
-                + {t("add")}
+              <Link href="/savings" className={buttonVariants({ variant: "outline", size: "sm" })}>
+                {t("add")}
               </Link>
             </CardAction>
           </CardHeader>
-          <CardContent className="space-y-3">
+          <CardContent className="space-y-4">
             {goals.map((g) => (
-              <div key={g.name} className="space-y-1">
-                <div className="flex justify-between gap-2 text-xs">
+              <div key={g.name} className="space-y-1.5">
+                <div className="flex justify-between gap-2 text-sm">
                   <span className="font-medium">{g.name}</span>
-                  <span className="text-muted-foreground">
+                  <span className="text-muted-foreground tabular-nums">
                     {rp(g.saved)} / {rp(g.target)}
                   </span>
                 </div>
@@ -151,17 +78,19 @@ export default async function DashboardPage() {
           <CardHeader>
             <CardTitle>{t("dueSoon")}</CardTitle>
           </CardHeader>
-          <CardContent className="divide-y">
+          <CardContent>
             {dueSoon.length === 0 && <p className="text-sm text-muted-foreground">{t("nothingDue")}</p>}
-            {dueSoon.map((d) => (
-              <div key={d.id} className="flex items-center justify-between py-2.5 text-sm first:pt-0 last:pb-0">
-                <div>
-                  <p className="font-medium">{d.who}</p>
-                  <p className="text-xs text-muted-foreground">{formatDate(d.due, locale)}</p>
-                </div>
-                <span className="font-semibold">{rp(d.installment)}</span>
-              </div>
-            ))}
+            <Table>
+              <TableBody>
+                {dueSoon.map((d) => (
+                  <TableRow key={d.id}>
+                    <TableCell className="font-medium">{d.who}</TableCell>
+                    <TableCell className="text-muted-foreground">{formatDate(d.due, locale)}</TableCell>
+                    <TableCell className="text-right tabular-nums">{rp(d.installment)}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
           </CardContent>
         </Card>
 
@@ -169,12 +98,12 @@ export default async function DashboardPage() {
           <CardHeader>
             <CardTitle>{t("costAnalysis")}</CardTitle>
           </CardHeader>
-          <CardContent className="space-y-2.5">
+          <CardContent className="grid gap-x-6 gap-y-3 @md/main:grid-cols-2">
             {sortedCosts.map((k) => (
               <div key={k.key} className="space-y-1">
-                <div className="flex justify-between text-xs">
+                <div className="flex justify-between text-sm">
                   <span>{k.key}</span>
-                  <span className="text-muted-foreground">{k.value}%</span>
+                  <span className="text-muted-foreground tabular-nums">{k.value}%</span>
                 </div>
                 <Progress value={k.value} />
               </div>
@@ -182,6 +111,37 @@ export default async function DashboardPage() {
           </CardContent>
         </Card>
       </div>
-    </div>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>{t("recent")}</CardTitle>
+          <CardDescription>{t("recentSub")}</CardDescription>
+          <CardAction>
+            <Link href="/transactions" className={buttonVariants({ variant: "outline", size: "sm" })}>
+              {t("viewAll")}
+            </Link>
+          </CardAction>
+        </CardHeader>
+        <CardContent>
+          <Table>
+            <TableBody>
+              {transactions.slice(0, 5).map((tx) => (
+                <TableRow key={tx.id}>
+                  <TableCell className="font-medium">{tx.name}</TableCell>
+                  <TableCell className="text-muted-foreground">{formatDate(tx.date, locale)}</TableCell>
+                  <TableCell>
+                    <Badge variant="outline">{c(tx.status)}</Badge>
+                  </TableCell>
+                  <TableCell className="text-right tabular-nums">
+                    {tx.type === "income" ? "+" : "−"}
+                    {rp(tx.amount)}
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </CardContent>
+      </Card>
+    </>
   );
 }

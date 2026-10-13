@@ -8,15 +8,19 @@ export const kpis = {
   debt: 4300000,
 };
 
-export const cashflow = [
-  { day: "Sen", income: 450000, expense: 120000 },
-  { day: "Sel", income: 0, expense: 310000 },
-  { day: "Rab", income: 700000, expense: 460000 },
-  { day: "Kam", income: 0, expense: 95000 },
-  { day: "Jum", income: 200000, expense: 540000 },
-  { day: "Sab", income: 0, expense: 780000 },
-  { day: "Min", income: 0, expense: 210000 },
-];
+// 90 hari terakhir sampai 2026-10-13 (deterministik supaya tidak berubah antar render).
+export const REFERENCE_DATE = "2026-10-13";
+export const dailyCashflow = Array.from({ length: 90 }, (_, i) => {
+  const d = new Date(REFERENCE_DATE);
+  d.setDate(d.getDate() - (89 - i));
+  const wave = (i * 37) % 11;
+  const payday = d.getDate() === 1 ? 2500000 : d.getDate() === 15 ? 1200000 : 0;
+  return {
+    date: d.toISOString().slice(0, 10),
+    income: payday + (wave % 4 === 0 ? 150000 + wave * 20000 : 0),
+    expense: 90000 + wave * 45000 + (d.getDay() === 6 ? 250000 : 0),
+  };
+});
 
 export const budget = { used: 8600000, limit: 10000000 };
 

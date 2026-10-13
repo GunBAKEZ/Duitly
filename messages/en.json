@@ -7,7 +7,11 @@
     "wishlist": "Wishlist",
     "savings": "Savings",
     "settings": "Settings",
-    "menu": "Menu"
+    "menu": "Menu",
+    "quickCreate": "Add transaction",
+    "account": "Account",
+    "logout": "Log out",
+    "guest": "My account"
   },
   "common": {
     "addTransaction": "Transaction",
@@ -57,7 +61,18 @@
     "viewAll": "View all",
     "add": "Add",
     "percentUsed": "{n}% used",
-    "leftAmount": "{amount} left"
+    "leftAmount": "{amount} left",
+    "range90": "Last 3 months",
+    "range30": "Last 30 days",
+    "range7": "Last 7 days",
+    "fBalance": "Across all accounts",
+    "fBalanceSub": "Updated today",
+    "fIncome": "Up this month",
+    "fIncomeSub": "Versus last month",
+    "fExpense": "Down this month",
+    "fExpenseSub": "Spending is lower",
+    "fDebt": "Watch due dates",
+    "fDebtSub": "{n} bills registered"
   },
   "spending": {
     "title": "Spending Insight",
@@ -86,7 +101,9 @@
     "totalOwed": "Total receivable",
     "remaining": "Remaining",
     "installment": "Installment",
-    "payNow": "Pay"
+    "payNow": "Pay",
+    "oweHint": "Remaining to pay",
+    "owedHint": "Remaining to receive"
   },
   "wishlist": {
     "title": "Wishlist",

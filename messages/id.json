@@ -7,7 +7,11 @@
     "wishlist": "Wishlist",
     "savings": "Tabungan",
     "settings": "Pengaturan",
-    "menu": "Menu"
+    "menu": "Menu",
+    "quickCreate": "Tambah transaksi",
+    "account": "Akun",
+    "logout": "Keluar",
+    "guest": "Akun saya"
   },
   "common": {
     "addTransaction": "Transaksi",
@@ -57,7 +61,18 @@
     "viewAll": "Lihat Semua",
     "add": "Tambah",
     "percentUsed": "{n}% terpakai",
-    "leftAmount": "Sisa {amount}"
+    "leftAmount": "Sisa {amount}",
+    "range90": "3 bulan terakhir",
+    "range30": "30 hari terakhir",
+    "range7": "7 hari terakhir",
+    "fBalance": "Saldo semua akun",
+    "fBalanceSub": "Diperbarui hari ini",
+    "fIncome": "Naik bulan ini",
+    "fIncomeSub": "Dibanding bulan lalu",
+    "fExpense": "Turun bulan ini",
+    "fExpenseSub": "Pengeluaran lebih hemat",
+    "fDebt": "Pantau jatuh tempo",
+    "fDebtSub": "{n} tagihan terdaftar"
   },
   "spending": {
     "title": "Analisis Boros",
@@ -86,7 +101,9 @@
     "totalOwed": "Total piutang",
     "remaining": "Sisa",
     "installment": "Cicilan",
-    "payNow": "Bayar"
+    "payNow": "Bayar",
+    "oweHint": "Sisa yang harus dibayar",
+    "owedHint": "Sisa yang akan diterima"
   },
   "wishlist": {
     "title": "Wishlist",

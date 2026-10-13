@@ -1,5 +1,5 @@
 import { getLocale, getTranslations } from "next-intl/server";
-import { KpiCard } from "@/components/features/kpi-card";
+import { SectionCards } from "@/components/section-cards";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -49,10 +49,12 @@ export default async function DebtsPage() {
 
   return (
     <>
-      <div className="grid gap-4 sm:grid-cols-2">
-        <KpiCard label={t("totalOwe")} value={rp(sum("owe"))} />
-        <KpiCard label={t("totalOwed")} value={rp(sum("owed"))} />
-      </div>
+      <SectionCards
+        items={[
+          { label: t("totalOwe"), value: rp(sum("owe")), footer: t("oweHint"), hint: " " },
+          { label: t("totalOwed"), value: rp(sum("owed")), footer: t("owedHint"), hint: " " },
+        ]}
+      />
       <Tabs defaultValue="owe">
         <TabsList>
           <TabsTrigger value="owe">{t("owe")}</TabsTrigger>

@@ -1,24 +1,25 @@
-import { Plus } from "lucide-react";
-import { getTranslations } from "next-intl/server";
-import { AppHeader } from "@/components/layout/app-header";
-import { AppSidebar } from "@/components/layout/app-sidebar";
-import { LocaleSwitcher } from "@/components/layout/locale-switcher";
-import { Button } from "@/components/ui/button";
+import { AppSidebar } from "@/components/app-sidebar";
+import { SiteHeader } from "@/components/site-header";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 
-export default async function AppLayout({ children }: { children: React.ReactNode }) {
-  const t = await getTranslations("common");
+export default function AppLayout({ children }: { children: React.ReactNode }) {
   return (
-    <SidebarProvider>
-      <AppSidebar />
+    <SidebarProvider
+      style={
+        {
+          "--sidebar-width": "calc(var(--spacing) * 72)",
+          "--header-height": "calc(var(--spacing) * 12)",
+        } as React.CSSProperties
+      }
+    >
+      <AppSidebar variant="inset" />
       <SidebarInset>
-        <AppHeader>
-          <LocaleSwitcher />
-          <Button size="sm">
-            <Plus /> {t("addTransaction")}
-          </Button>
-        </AppHeader>
-        <div className="flex flex-1 flex-col gap-4 p-4 md:p-6">{children}</div>
+        <SiteHeader />
+        <div className="flex flex-1 flex-col">
+          <div className="@container/main flex flex-1 flex-col gap-2">
+            <div className="flex flex-col gap-4 px-4 py-4 md:gap-6 md:py-6 lg:px-6">{children}</div>
+          </div>
+        </div>
       </SidebarInset>
     </SidebarProvider>
   );

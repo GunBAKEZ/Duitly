@@ -22,7 +22,7 @@ export default async function SavingsPage() {
               <CardContent className="space-y-3">
                 <div className="flex items-start justify-between">
                   <p className="font-medium">{g.name}</p>
-                  <Badge variant={ok ? "success" : "destructive"}>{ok ? t("onTrack") : t("behind")}</Badge>
+                  <Badge variant={ok ? "outline" : "destructive"}>{ok ? t("onTrack") : t("behind")}</Badge>
                 </div>
                 <Progress value={(g.saved / g.target) * 100} />
                 <p className="text-sm text-muted-foreground">
