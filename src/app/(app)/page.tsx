@@ -70,7 +70,7 @@ export default async function DashboardPage() {
             </CardAction>
           </CardHeader>
           <CardContent>
-            <CashflowChart data={cashflow} labels={{ income: c("income"), expense: c("expense") }} />
+            <CashflowChart data={cashflow} labels={{ income: c("income"), expense: c("expense") }} locale={locale} />
           </CardContent>
         </Card>
 
