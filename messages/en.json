@@ -1,16 +1,115 @@
 {
-  "nav": { "dashboard": "Dashboard", "transactions": "Transactions", "debts": "Debts", "spending": "Spending Insight", "wishlist": "Wishlist", "savings": "Savings", "settings": "Settings", "menu": "Menu" },
-  "common": { "addTransaction": "Transaction", "search": "Search...", "language": "Language", "income": "Income", "expense": "Expense", "balance": "Balance", "completed": "Completed", "pending": "Pending", "overdue": "Overdue", "left": "Left", "perDay": "per day", "perWeek": "per week", "perMonth": "per month", "perYear": "per year", "date": "Date", "name": "Name", "amount": "Amount", "status": "Status", "category": "Category", "target": "Target", "paid": "Paid", "dueDate": "Due date" },
-  "dashboard": {
-    "title": "Dashboard", "subtitle": "Track your financial health this month",
-    "totalBalance": "Total balance", "monthIncome": "Income this month", "monthExpense": "Expenses this month", "activeDebt": "Active debt",
-    "vsLastMonth": "from last month", "cashflow": "Cash flow", "budget": "Monthly spending limit", "budgetUsed": "used of",
-    "costAnalysis": "Cost analysis", "goals": "Savings goals", "dueSoon": "Due soon", "recent": "Recent transactions", "nothingDue": "Nothing due"
+  "nav": {
+    "dashboard": "Dashboard",
+    "transactions": "Transactions",
+    "debts": "Debts",
+    "spending": "Spending Insight",
+    "wishlist": "Wishlist",
+    "savings": "Savings",
+    "settings": "Settings",
+    "menu": "Menu",
+    "spendingShort": "Spend"
   },
-  "spending": { "title": "Spending Insight", "subtitle": "How much are you overspending this month?", "score": "Spending score", "frugal": "Frugal", "balanced": "Balanced", "wasteful": "Overspending", "rule": "50/30/20 rule", "need": "Needs", "want": "Wants", "saving": "Savings", "actual": "Actual", "ideal": "Ideal", "insights": "Insights", "insight1": "Food spending is up 32% versus last month.", "insight2": "Daily average is Rp 85,000; you are projected to exceed your budget.", "insight3": "Wants are 41% of income, above the 30% target." },
-  "debts": { "title": "Debts", "subtitle": "Debts and receivables to keep an eye on", "owe": "I owe", "owed": "Owed to me", "totalOwe": "Total owed", "totalOwed": "Total receivable", "remaining": "Remaining", "installment": "Installment", "payNow": "Pay" },
-  "wishlist": { "title": "Wishlist", "subtitle": "Things you want", "startSaving": "Start saving", "high": "High priority", "medium": "Medium priority", "low": "Low priority", "affordable": "Affordable this month", "saveFirst": "Save up first", "total": "Wishlist total" },
-  "savings": { "title": "Savings", "subtitle": "Plan daily, monthly and yearly savings", "calculator": "Savings calculator", "targetAmount": "Target (Rp)", "months": "Timeframe (months)", "saved": "Saved so far", "needed": "Required deposit", "onTrack": "On track", "behind": "Behind", "timeLeft": "{n} months left" },
-  "transactions": { "title": "Transactions", "subtitle": "All income and expenses" },
-  "settings": { "title": "Settings", "subtitle": "Your account preferences", "languageHint": "Choose Duitly's display language." }
+  "common": {
+    "addTransaction": "Transaction",
+    "search": "Search...",
+    "language": "Language",
+    "income": "Income",
+    "expense": "Expense",
+    "balance": "Balance",
+    "completed": "Completed",
+    "pending": "Pending",
+    "overdue": "Overdue",
+    "left": "Left",
+    "perDay": "per day",
+    "perWeek": "per week",
+    "perMonth": "per month",
+    "perYear": "per year",
+    "date": "Date",
+    "name": "Name",
+    "amount": "Amount",
+    "status": "Status",
+    "category": "Category",
+    "target": "Target",
+    "paid": "Paid",
+    "dueDate": "Due date"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "subtitle": "Track your financial health this month",
+    "totalBalance": "Total balance",
+    "monthIncome": "Income this month",
+    "monthExpense": "Expenses this month",
+    "activeDebt": "Active debt",
+    "vsLastMonth": "from last month",
+    "cashflow": "Cash flow",
+    "budget": "Monthly spending limit",
+    "budgetUsed": "used of",
+    "costAnalysis": "Cost analysis",
+    "goals": "Savings goals",
+    "dueSoon": "Due soon",
+    "recent": "Recent transactions",
+    "nothingDue": "Nothing due"
+  },
+  "spending": {
+    "title": "Spending Insight",
+    "subtitle": "How much are you overspending this month?",
+    "score": "Spending score",
+    "frugal": "Frugal",
+    "balanced": "Balanced",
+    "wasteful": "Overspending",
+    "rule": "50/30/20 rule",
+    "need": "Needs",
+    "want": "Wants",
+    "saving": "Savings",
+    "actual": "Actual",
+    "ideal": "Ideal",
+    "insights": "Insights",
+    "insight1": "Food spending is up 32% versus last month.",
+    "insight2": "Daily average is Rp 85,000; you are projected to exceed your budget.",
+    "insight3": "Wants are 41% of income, above the 30% target."
+  },
+  "debts": {
+    "title": "Debts",
+    "subtitle": "Debts and receivables to keep an eye on",
+    "owe": "I owe",
+    "owed": "Owed to me",
+    "totalOwe": "Total owed",
+    "totalOwed": "Total receivable",
+    "remaining": "Remaining",
+    "installment": "Installment",
+    "payNow": "Pay"
+  },
+  "wishlist": {
+    "title": "Wishlist",
+    "subtitle": "Things you want",
+    "startSaving": "Start saving",
+    "high": "High priority",
+    "medium": "Medium priority",
+    "low": "Low priority",
+    "affordable": "Affordable this month",
+    "saveFirst": "Save up first",
+    "total": "Wishlist total"
+  },
+  "savings": {
+    "title": "Savings",
+    "subtitle": "Plan daily, monthly and yearly savings",
+    "calculator": "Savings calculator",
+    "targetAmount": "Target (Rp)",
+    "months": "Timeframe (months)",
+    "saved": "Saved so far",
+    "needed": "Required deposit",
+    "onTrack": "On track",
+    "behind": "Behind",
+    "timeLeft": "{n} months left"
+  },
+  "transactions": {
+    "title": "Transactions",
+    "subtitle": "All income and expenses"
+  },
+  "settings": {
+    "title": "Settings",
+    "subtitle": "Your account preferences",
+    "languageHint": "Choose Duitly's display language."
+  }
 }

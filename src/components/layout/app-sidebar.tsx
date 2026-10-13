@@ -50,7 +50,7 @@ export function AppSidebar() {
           <span className="text-lg font-semibold tracking-tight group-data-[collapsible=icon]:hidden">Duitly</span>
         </div>
       </SidebarHeader>
-      <SidebarContent>
+      <SidebarContent className="hidden md:flex">
         <SidebarGroup>
           <SidebarGroupLabel>{t("menu")}</SidebarGroupLabel>
           <SidebarGroupContent>
@@ -71,7 +71,21 @@ export function AppSidebar() {
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
-      <SidebarFooter>
+      <SidebarContent className="md:hidden">
+        <SidebarGroup>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              <SidebarMenuItem>
+                <SidebarMenuButton isActive={pathname.startsWith("/settings")} render={<Link href="/settings" />}>
+                  <Settings />
+                  <span>{t("settings")}</span>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+      </SidebarContent>
+      <SidebarFooter className="hidden md:flex">
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton
