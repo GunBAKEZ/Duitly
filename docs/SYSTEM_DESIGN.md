@@ -293,8 +293,12 @@ Pengembangan lanjutan (opsional): transaksi berulang (langganan), multi-currency
 
 ---
 
-## 9. Keputusan Terbuka
-1. Hanya untuk satu orang, atau nanti multi-user?
-2. Bahasa UI: Indonesia saja atau dwibahasa?
-3. Database: Postgres hosted (Neon/Supabase) atau SQLite lokal yang lebih sederhana?
-4. Perlu input transaksi cepat via mobile (PWA)?
+## 9. Keputusan (sudah diputuskan)
+1. **Multi-user** untuk 2 orang (pasangan). Data **dipisah per user**, tanpa wallet bersama. Dijaga Row Level Security Supabase (`supabase/rls.sql`).
+2. **Dua bahasa** (Indonesia default, English) lewat `next-intl`, bahasa disimpan di cookie.
+3. **Supabase** (free plan) untuk Postgres + Auth. Catatan: project free di-pause setelah sekitar 1 minggu tanpa aktivitas.
+4. **PWA** ikut dari awal (manifest + service worker minimal) supaya bisa dipasang di HP.
+
+## 10. Status Implementasi
+- Selesai: scaffold, tema, sidebar, i18n, PWA dasar, dashboard + halaman lain dengan data contoh, service skor boros & rencana nabung, skema Drizzle, RLS.
+- Belum: login Supabase, CRUD (form transaksi/utang/wishlist/goal), query nyata, budget, export CSV.

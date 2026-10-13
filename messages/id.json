@@ -1,0 +1,16 @@
+{
+  "nav": { "dashboard": "Dashboard", "transactions": "Transaksi", "debts": "Utang", "spending": "Analisis Boros", "wishlist": "Wishlist", "savings": "Tabungan", "settings": "Pengaturan", "menu": "Menu" },
+  "common": { "addTransaction": "Transaksi", "search": "Cari...", "language": "Bahasa", "income": "Pemasukan", "expense": "Pengeluaran", "balance": "Saldo", "completed": "Selesai", "pending": "Menunggu", "overdue": "Terlambat", "left": "Sisa", "perDay": "per hari", "perWeek": "per minggu", "perMonth": "per bulan", "perYear": "per tahun", "date": "Tanggal", "name": "Nama", "amount": "Jumlah", "status": "Status", "category": "Kategori", "target": "Target", "paid": "Terbayar", "dueDate": "Jatuh tempo" },
+  "dashboard": {
+    "title": "Dashboard", "subtitle": "Pantau kondisi keuanganmu bulan ini",
+    "totalBalance": "Total saldo", "monthIncome": "Pemasukan bulan ini", "monthExpense": "Pengeluaran bulan ini", "activeDebt": "Utang aktif",
+    "vsLastMonth": "dari bulan lalu", "cashflow": "Arus kas", "budget": "Batas pengeluaran bulanan", "budgetUsed": "terpakai dari",
+    "costAnalysis": "Analisis biaya", "goals": "Target tabungan", "dueSoon": "Harus dibayar", "recent": "Transaksi terbaru", "nothingDue": "Tidak ada yang jatuh tempo"
+  },
+  "spending": { "title": "Analisis Boros", "subtitle": "Seberapa boros kamu bulan ini?", "score": "Skor boros", "frugal": "Hemat", "balanced": "Seimbang", "wasteful": "Boros", "rule": "Aturan 50/30/20", "need": "Kebutuhan", "want": "Keinginan", "saving": "Tabungan", "actual": "Aktual", "ideal": "Ideal", "insights": "Insight", "insight1": "Pengeluaran Makan naik 32% dibanding bulan lalu.", "insight2": "Rata-rata harian Rp 85.000, proyeksi akhir bulan melewati budget.", "insight3": "Porsi keinginan 41% dari pemasukan, di atas target 30%." },
+  "debts": { "title": "Utang", "subtitle": "Utang dan piutang yang perlu dipantau", "owe": "Utang saya", "owed": "Piutang", "totalOwe": "Total utang", "totalOwed": "Total piutang", "remaining": "Sisa", "installment": "Cicilan", "payNow": "Bayar" },
+  "wishlist": { "title": "Wishlist", "subtitle": "Barang yang kamu inginkan", "startSaving": "Mulai nabung", "high": "Prioritas tinggi", "medium": "Prioritas sedang", "low": "Prioritas rendah", "affordable": "Bisa dibeli bulan ini", "saveFirst": "Nabung dulu", "total": "Total wishlist" },
+  "savings": { "title": "Tabungan", "subtitle": "Atur nabung harian, bulanan, dan tahunan", "calculator": "Kalkulator tabungan", "targetAmount": "Target (Rp)", "months": "Jangka waktu (bulan)", "saved": "Sudah terkumpul", "needed": "Setoran yang dibutuhkan", "onTrack": "On track", "behind": "Tertinggal", "timeLeft": "Sisa {n} bulan" },
+  "transactions": { "title": "Transaksi", "subtitle": "Semua pemasukan dan pengeluaran" },
+  "settings": { "title": "Pengaturan", "subtitle": "Preferensi akunmu", "languageHint": "Pilih bahasa tampilan Duitly." }
+}
