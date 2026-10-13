@@ -1,6 +1,5 @@
 import { Plus } from "lucide-react";
 import { getTranslations } from "next-intl/server";
-import { BottomNav } from "@/components/layout/bottom-nav";
 import { AppSidebar } from "@/components/layout/app-sidebar";
 import { LocaleSwitcher } from "@/components/layout/locale-switcher";
 import { Button } from "@/components/ui/button";
@@ -21,8 +20,7 @@ export default async function AppLayout({ children }: { children: React.ReactNod
             </Button>
           </div>
         </header>
-        <div className="flex flex-1 flex-col gap-4 p-4 pt-0 pb-24 md:p-6 md:pt-0">{children}</div>
-        <BottomNav />
+        <div className="flex flex-1 flex-col gap-4 p-4 pt-0 md:p-6 md:pt-0">{children}</div>
       </SidebarInset>
     </SidebarProvider>
   );

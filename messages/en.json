@@ -8,7 +8,9 @@
     "savings": "Savings",
     "settings": "Settings",
     "menu": "Menu",
-    "spendingShort": "Spend"
+    "more": "More",
+    "budgetLeft": "Budget left this month",
+    "you": "My account"
   },
   "common": {
     "addTransaction": "Transaction",

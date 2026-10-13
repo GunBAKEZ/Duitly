@@ -2,17 +2,10 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useTranslations } from "next-intl";
-import {
-  HandCoins,
-  LayoutDashboard,
-  PiggyBank,
-  Settings,
-  ArrowLeftRight,
-  Gauge,
-  Gift,
-  Wallet,
-} from "lucide-react";
+import { useLocale, useTranslations } from "next-intl";
+import { ArrowLeftRight, Gauge, Gift, HandCoins, LayoutDashboard, PiggyBank, Settings, Wallet } from "lucide-react";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Progress } from "@/components/ui/progress";
 import {
   Sidebar,
   SidebarContent,
@@ -25,6 +18,8 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
+import { formatRupiah } from "@/lib/format";
+import { budget } from "@/lib/mock-data";
 
 const items = [
   { href: "/", key: "dashboard", icon: LayoutDashboard },
@@ -35,10 +30,27 @@ const items = [
   { href: "/savings", key: "savings", icon: PiggyBank },
 ] as const;
 
+const more = [{ href: "/settings", key: "settings", icon: Settings }] as const;
+
 export function AppSidebar() {
   const t = useTranslations("nav");
+  const locale = useLocale();
   const pathname = usePathname();
   const active = (href: string) => (href === "/" ? pathname === "/" : pathname.startsWith(href));
+  const left = budget.limit - budget.used;
+
+  const renderItems = (list: readonly { href: string; key: string; icon: typeof Settings }[]) => (
+    <SidebarMenu>
+      {list.map(({ href, key, icon: Icon }) => (
+        <SidebarMenuItem key={href}>
+          <SidebarMenuButton isActive={active(href)} tooltip={t(key as "dashboard")} render={<Link href={href} />}>
+            <Icon />
+            <span>{t(key as "dashboard")}</span>
+          </SidebarMenuButton>
+        </SidebarMenuItem>
+      ))}
+    </SidebarMenu>
+  );
 
   return (
     <Sidebar collapsible="icon">
@@ -50,54 +62,28 @@ export function AppSidebar() {
           <span className="text-lg font-semibold tracking-tight group-data-[collapsible=icon]:hidden">Duitly</span>
         </div>
       </SidebarHeader>
-      <SidebarContent className="hidden md:flex">
+      <SidebarContent>
         <SidebarGroup>
           <SidebarGroupLabel>{t("menu")}</SidebarGroupLabel>
-          <SidebarGroupContent>
-            <SidebarMenu>
-              {items.map(({ href, key, icon: Icon }) => (
-                <SidebarMenuItem key={href}>
-                  <SidebarMenuButton
-                    isActive={active(href)}
-                    tooltip={t(key)}
-                    render={<Link href={href} />}
-                  >
-                    <Icon />
-                    <span>{t(key)}</span>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
-            </SidebarMenu>
-          </SidebarGroupContent>
+          <SidebarGroupContent>{renderItems(items)}</SidebarGroupContent>
         </SidebarGroup>
-      </SidebarContent>
-      <SidebarContent className="md:hidden">
         <SidebarGroup>
-          <SidebarGroupContent>
-            <SidebarMenu>
-              <SidebarMenuItem>
-                <SidebarMenuButton isActive={pathname.startsWith("/settings")} render={<Link href="/settings" />}>
-                  <Settings />
-                  <span>{t("settings")}</span>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-            </SidebarMenu>
-          </SidebarGroupContent>
+          <SidebarGroupLabel>{t("more")}</SidebarGroupLabel>
+          <SidebarGroupContent>{renderItems(more)}</SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
-      <SidebarFooter className="hidden md:flex">
-        <SidebarMenu>
-          <SidebarMenuItem>
-            <SidebarMenuButton
-              isActive={pathname.startsWith("/settings")}
-              tooltip={t("settings")}
-              render={<Link href="/settings" />}
-            >
-              <Settings />
-              <span>{t("settings")}</span>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
-        </SidebarMenu>
+      <SidebarFooter className="gap-3">
+        <div className="space-y-2 rounded-xl bg-muted p-3 group-data-[collapsible=icon]:hidden">
+          <p className="text-xs text-muted-foreground">{t("budgetLeft")}</p>
+          <p className="text-lg font-semibold">{formatRupiah(left, locale)}</p>
+          <Progress value={(budget.used / budget.limit) * 100} />
+        </div>
+        <div className="flex items-center gap-2 px-1">
+          <Avatar className="size-8">
+            <AvatarFallback>D</AvatarFallback>
+          </Avatar>
+          <span className="text-sm font-medium group-data-[collapsible=icon]:hidden">{t("you")}</span>
+        </div>
       </SidebarFooter>
     </Sidebar>
   );

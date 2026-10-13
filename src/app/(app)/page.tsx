@@ -37,26 +37,46 @@ export default async function DashboardPage() {
           </CardContent>
         </Card>
 
-        <Card>
-          <CardHeader>
-            <CardTitle>{t("budget")}</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-3">
-            <p className="text-2xl font-semibold">{rp(budget.used)}</p>
-            <Progress value={(budget.used / budget.limit) * 100} />
-            <p className="text-xs text-muted-foreground">
-              {t("budgetUsed")} {rp(budget.limit)}
-            </p>
-          </CardContent>
-        </Card>
+        <div className="flex flex-col gap-4">
+          <Card>
+            <CardHeader>
+              <CardTitle>{t("budget")}</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-3">
+              <p className="text-2xl font-semibold">{rp(budget.used)}</p>
+              <Progress value={(budget.used / budget.limit) * 100} />
+              <p className="text-xs text-muted-foreground">
+                {t("budgetUsed")} {rp(budget.limit)}
+              </p>
+            </CardContent>
+          </Card>
+
+          <Card className="flex-1">
+            <CardHeader>
+              <CardTitle>{t("dueSoon")}</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-3">
+              {dueSoon.length === 0 && <p className="text-sm text-muted-foreground">{t("nothingDue")}</p>}
+              {dueSoon.map((d) => (
+                <div key={d.id} className="flex items-center justify-between text-sm">
+                  <div>
+                    <p className="font-medium">{d.who}</p>
+                    <p className="text-xs text-muted-foreground">{formatDate(d.due, locale)}</p>
+                  </div>
+                  <span>{rp(d.installment)}</span>
+                </div>
+              ))}
+            </CardContent>
+          </Card>
+        </div>
       </div>
 
-      <div className="grid gap-4 lg:grid-cols-3">
+      <div className="grid gap-4 lg:grid-cols-2">
         <Card>
           <CardHeader>
             <CardTitle>{t("costAnalysis")}</CardTitle>
           </CardHeader>
-          <CardContent className="space-y-3">
+          <CardContent className="grid gap-x-6 gap-y-4 sm:grid-cols-2">
             {costCategories.map((k) => (
               <div key={k.key} className="space-y-1">
                 <div className="flex justify-between text-sm">
@@ -73,7 +93,7 @@ export default async function DashboardPage() {
           <CardHeader>
             <CardTitle>{t("goals")}</CardTitle>
           </CardHeader>
-          <CardContent className="space-y-4">
+          <CardContent className="space-y-5">
             {goals.map((g) => (
               <div key={g.name} className="space-y-1.5">
                 <div className="flex justify-between text-sm">
@@ -83,24 +103,6 @@ export default async function DashboardPage() {
                   </span>
                 </div>
                 <Progress value={(g.saved / g.target) * 100} />
-              </div>
-            ))}
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader>
-            <CardTitle>{t("dueSoon")}</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-3">
-            {dueSoon.length === 0 && <p className="text-sm text-muted-foreground">{t("nothingDue")}</p>}
-            {dueSoon.map((d) => (
-              <div key={d.id} className="flex items-center justify-between text-sm">
-                <div>
-                  <p className="font-medium">{d.who}</p>
-                  <p className="text-xs text-muted-foreground">{formatDate(d.due, locale)}</p>
-                </div>
-                <span>{rp(d.installment)}</span>
               </div>
             ))}
           </CardContent>

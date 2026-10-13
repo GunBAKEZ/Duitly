@@ -8,7 +8,9 @@
     "savings": "Tabungan",
     "settings": "Pengaturan",
     "menu": "Menu",
-    "spendingShort": "Boros"
+    "more": "Lainnya",
+    "budgetLeft": "Sisa budget bulan ini",
+    "you": "Akun saya"
   },
   "common": {
     "addTransaction": "Transaksi",
