@@ -1,6 +1,5 @@
 import { getLocale, getTranslations } from "next-intl/server";
 import { SavingsCalculator } from "@/components/features/savings-calculator";
-import { PageHeader } from "@/components/layout/page-header";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
@@ -13,7 +12,6 @@ export default async function SavingsPage() {
   const locale = await getLocale();
   return (
     <>
-      <PageHeader title={t("title")} subtitle={t("subtitle")} />
       <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
         {goals.map((g) => {
           const plan = computeSavingsPlan({ targetAmount: g.target, saved: g.saved, months: g.monthsLeft });

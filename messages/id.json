@@ -7,10 +7,7 @@
     "wishlist": "Wishlist",
     "savings": "Tabungan",
     "settings": "Pengaturan",
-    "menu": "Menu",
-    "more": "Lainnya",
-    "budgetLeft": "Sisa budget bulan ini",
-    "you": "Akun saya"
+    "menu": "Menu"
   },
   "common": {
     "addTransaction": "Transaksi",
@@ -51,7 +48,17 @@
     "goals": "Target tabungan",
     "dueSoon": "Harus dibayar",
     "recent": "Transaksi terbaru",
-    "nothingDue": "Tidak ada yang jatuh tempo"
+    "nothingDue": "Tidak ada yang jatuh tempo",
+    "overview": "Ikhtisar akun",
+    "totalBalanceCaps": "Total saldo",
+    "realtime": "Perhitungan realtime aktif",
+    "billsRegistered": "{n} tagihan terdaftar",
+    "cashflowSub": "Perbandingan pemasukan vs pengeluaran mingguan",
+    "recentSub": "Aktivitas keuangan 7 hari terakhir",
+    "viewAll": "Lihat Semua",
+    "add": "Tambah",
+    "percentUsed": "{n}% terpakai",
+    "leftAmount": "Sisa {amount}"
   },
   "spending": {
     "title": "Analisis Boros",

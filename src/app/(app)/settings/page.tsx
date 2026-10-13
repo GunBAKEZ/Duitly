@@ -1,6 +1,5 @@
 import { getTranslations } from "next-intl/server";
 import { LocaleSwitcher } from "@/components/layout/locale-switcher";
-import { PageHeader } from "@/components/layout/page-header";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export default async function SettingsPage() {
@@ -8,7 +7,6 @@ export default async function SettingsPage() {
   const c = await getTranslations("common");
   return (
     <>
-      <PageHeader title={t("title")} subtitle={t("subtitle")} />
       <Card className="max-w-xl">
         <CardHeader>
           <CardTitle>{c("language")}</CardTitle>

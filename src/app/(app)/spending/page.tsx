@@ -1,6 +1,5 @@
 import { getLocale, getTranslations } from "next-intl/server";
 import { ScoreGauge } from "@/components/features/score-gauge";
-import { PageHeader } from "@/components/layout/page-header";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { computeSpendingScore } from "@/lib/services/spending-score";
@@ -20,7 +19,6 @@ export default async function SpendingPage() {
 
   return (
     <>
-      <PageHeader title={t("title")} subtitle={t("subtitle")} />
       <div className="grid gap-4 lg:grid-cols-2">
         <Card>
           <CardHeader>

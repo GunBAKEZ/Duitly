@@ -1,5 +1,4 @@
 import { getLocale, getTranslations } from "next-intl/server";
-import { PageHeader } from "@/components/layout/page-header";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -14,7 +13,9 @@ export default async function WishlistPage() {
   const total = wishlist.reduce((a, w) => a + w.price, 0);
   return (
     <>
-      <PageHeader title={t("title")} subtitle={`${t("subtitle")} · ${t("total")}: ${formatRupiah(total, locale)}`} />
+      <p className="text-sm text-muted-foreground">
+        {t("total")}: <span className="font-semibold text-foreground">{formatRupiah(total, locale)}</span>
+      </p>
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
         {wishlist.map((w) => (
           <Card key={w.id}>

@@ -1,7 +1,7 @@
 "use client";
 
 import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
-import { ChartContainer, ChartLegend, ChartLegendContent, ChartTooltip, ChartTooltipContent, type ChartConfig } from "@/components/ui/chart";
+import { ChartContainer, ChartTooltip, ChartTooltipContent, type ChartConfig } from "@/components/ui/chart";
 
 export function CashflowChart({
   data,
@@ -21,7 +21,7 @@ export function CashflowChart({
         <CartesianGrid vertical={false} />
         <XAxis dataKey="day" tickLine={false} axisLine={false} />
         <ChartTooltip content={<ChartTooltipContent />} />
-        <ChartLegend content={<ChartLegendContent />} />
+        
         <Bar dataKey="income" fill="var(--color-income)" radius={6} isAnimationActive={false} />
         <Bar dataKey="expense" fill="var(--color-expense)" radius={6} isAnimationActive={false} />
       </BarChart>

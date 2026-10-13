@@ -2,10 +2,8 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useLocale, useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 import { ArrowLeftRight, Gauge, Gift, HandCoins, LayoutDashboard, PiggyBank, Settings, Wallet } from "lucide-react";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { Progress } from "@/components/ui/progress";
 import {
   Sidebar,
   SidebarContent,
@@ -18,8 +16,6 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { formatRupiah } from "@/lib/format";
-import { budget } from "@/lib/mock-data";
 
 const items = [
   { href: "/", key: "dashboard", icon: LayoutDashboard },
@@ -34,10 +30,8 @@ const more = [{ href: "/settings", key: "settings", icon: Settings }] as const;
 
 export function AppSidebar() {
   const t = useTranslations("nav");
-  const locale = useLocale();
   const pathname = usePathname();
   const active = (href: string) => (href === "/" ? pathname === "/" : pathname.startsWith(href));
-  const left = budget.limit - budget.used;
 
   const renderItems = (list: readonly { href: string; key: string; icon: typeof Settings }[]) => (
     <SidebarMenu>
@@ -64,27 +58,11 @@ export function AppSidebar() {
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel>{t("menu")}</SidebarGroupLabel>
+          <SidebarGroupLabel className="text-[11px] tracking-wider uppercase">{t("menu")}</SidebarGroupLabel>
           <SidebarGroupContent>{renderItems(items)}</SidebarGroupContent>
         </SidebarGroup>
-        <SidebarGroup>
-          <SidebarGroupLabel>{t("more")}</SidebarGroupLabel>
-          <SidebarGroupContent>{renderItems(more)}</SidebarGroupContent>
-        </SidebarGroup>
       </SidebarContent>
-      <SidebarFooter className="gap-3">
-        <div className="space-y-2 rounded-xl bg-muted p-3 group-data-[collapsible=icon]:hidden">
-          <p className="text-xs text-muted-foreground">{t("budgetLeft")}</p>
-          <p className="text-lg font-semibold">{formatRupiah(left, locale)}</p>
-          <Progress value={(budget.used / budget.limit) * 100} />
-        </div>
-        <div className="flex items-center gap-2 px-1">
-          <Avatar className="size-8">
-            <AvatarFallback>D</AvatarFallback>
-          </Avatar>
-          <span className="text-sm font-medium group-data-[collapsible=icon]:hidden">{t("you")}</span>
-        </div>
-      </SidebarFooter>
+      <SidebarFooter>{renderItems(more)}</SidebarFooter>
     </Sidebar>
   );
 }

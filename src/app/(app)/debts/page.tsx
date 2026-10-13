@@ -1,6 +1,5 @@
 import { getLocale, getTranslations } from "next-intl/server";
 import { KpiCard } from "@/components/features/kpi-card";
-import { PageHeader } from "@/components/layout/page-header";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -50,7 +49,6 @@ export default async function DebtsPage() {
 
   return (
     <>
-      <PageHeader title={t("title")} subtitle={t("subtitle")} />
       <div className="grid gap-4 sm:grid-cols-2">
         <KpiCard label={t("totalOwe")} value={rp(sum("owe"))} />
         <KpiCard label={t("totalOwed")} value={rp(sum("owed"))} />

@@ -7,10 +7,7 @@
     "wishlist": "Wishlist",
     "savings": "Savings",
     "settings": "Settings",
-    "menu": "Menu",
-    "more": "More",
-    "budgetLeft": "Budget left this month",
-    "you": "My account"
+    "menu": "Menu"
   },
   "common": {
     "addTransaction": "Transaction",
@@ -51,7 +48,17 @@
     "goals": "Savings goals",
     "dueSoon": "Due soon",
     "recent": "Recent transactions",
-    "nothingDue": "Nothing due"
+    "nothingDue": "Nothing due",
+    "overview": "Account overview",
+    "totalBalanceCaps": "Total balance",
+    "realtime": "Realtime calculation on",
+    "billsRegistered": "{n} bills registered",
+    "cashflowSub": "Weekly income vs expenses",
+    "recentSub": "Financial activity in the last 7 days",
+    "viewAll": "View all",
+    "add": "Add",
+    "percentUsed": "{n}% used",
+    "leftAmount": "{amount} left"
   },
   "spending": {
     "title": "Spending Insight",
