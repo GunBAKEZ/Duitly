@@ -1,4 +1,4 @@
-import { date, integer, pgEnum, pgTable, text, timestamp, uuid } from "drizzle-orm/pg-core";
+import { date, index, integer, pgEnum, pgTable, text, timestamp, uuid } from "drizzle-orm/pg-core";
 
 // user_id = auth.users.id (Supabase Auth). Semua data dipisah per user lewat RLS.
 // Uang disimpan sebagai integer rupiah.
@@ -31,12 +31,15 @@ export const categories = pgTable("categories", {
   color: text("color"),
 });
 
-export const transactions = pgTable("transactions", {
+export const transactions = pgTable(
+  "transactions",
+  {
   id: uuid("id").primaryKey().defaultRandom(),
   userId: uuid("user_id").notNull(),
   accountId: uuid("account_id").notNull().references(() => accounts.id),
   categoryId: uuid("category_id").references(() => categories.id),
   type: txType("type").notNull(),
+  name: text("name").notNull(),
   amount: integer("amount").notNull(),
   date: date("date").notNull(),
   note: text("note"),
@@ -44,7 +47,9 @@ export const transactions = pgTable("transactions", {
   debtPaymentId: uuid("debt_payment_id"),
   savingsContributionId: uuid("savings_contribution_id"),
   createdAt: timestamp("created_at").notNull().defaultNow(),
-});
+  },
+  (t) => [index("transactions_user_date_idx").on(t.userId, t.date)],
+);
 
 export const budgets = pgTable("budgets", {
   id: uuid("id").primaryKey().defaultRandom(),

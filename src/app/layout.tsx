@@ -4,6 +4,7 @@ import { NextIntlClientProvider } from "next-intl";
 import { getLocale } from "next-intl/server";
 import { SwRegister } from "@/components/layout/sw-register";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { Toaster } from "@/components/ui/sonner";
 import "./globals.css";
 
 const font = Plus_Jakarta_Sans({ variable: "--font-jakarta", subsets: ["latin"] });
@@ -27,6 +28,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           <TooltipProvider>{children}</TooltipProvider>
         </NextIntlClientProvider>
         <SwRegister />
+        <Toaster />
       </body>
     </html>
   );

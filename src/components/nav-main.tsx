@@ -3,6 +3,7 @@
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { CirclePlusIcon } from "lucide-react"
+import { useQuickAdd } from "@/components/quick-add"
 import {
   SidebarGroup,
   SidebarGroupContent,
@@ -19,6 +20,7 @@ export function NavMain({
   quickCreateLabel: string
 }) {
   const pathname = usePathname()
+  const quickAdd = useQuickAdd()
   const isActive = (url: string) =>
     url === "/" ? pathname === "/" : pathname.startsWith(url)
 
@@ -29,6 +31,7 @@ export function NavMain({
           <SidebarMenuItem>
             <SidebarMenuButton
               tooltip={quickCreateLabel}
+              onClick={quickAdd.open}
               className="min-w-8 bg-primary text-primary-foreground duration-200 ease-linear hover:bg-primary/90 hover:text-primary-foreground active:bg-primary/90 active:text-primary-foreground"
             >
               <CirclePlusIcon />

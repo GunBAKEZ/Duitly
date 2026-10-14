@@ -300,5 +300,6 @@ Pengembangan lanjutan (opsional): transaksi berulang (langganan), multi-currency
 4. **PWA** ikut dari awal (manifest + service worker minimal) supaya bisa dipasang di HP.
 
 ## 10. Status Implementasi
-- Selesai: scaffold, tema, sidebar, i18n, PWA dasar, dashboard + halaman lain dengan data contoh, service skor boros & rencana nabung, skema Drizzle, RLS.
-- Belum: login Supabase, CRUD (form transaksi/utang/wishlist/goal), query nyata, budget, export CSV.
+- Selesai: scaffold, tema, shadcn block `dashboard-01`, i18n (ID/EN), PWA dasar, skema Drizzle + RLS, login (email + Google) via Supabase Auth, CRUD transaksi, utang/piutang (bayar utang otomatis membuat transaksi), wishlist (jadikan target tabungan), target tabungan + setoran, analisis boros dari data nyata, dashboard dari database. Mode demo bila Supabase belum dikonfigurasi.
+- Teruji otomatis: query dan isolasi antar user (PGlite), validator form. Belum teruji end-to-end: alur login Supabase (butuh project Supabase asli).
+- Belum: budget per kategori, edit data (baru tambah dan hapus), transfer antar akun, kelola akun dan kategori, export CSV, transaksi berulang.

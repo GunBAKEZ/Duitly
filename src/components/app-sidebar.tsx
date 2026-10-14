@@ -26,7 +26,10 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+export function AppSidebar({
+  user,
+  ...props
+}: React.ComponentProps<typeof Sidebar> & { user: { name: string; email: string } | null }) {
   const t = useTranslations("nav")
 
   const navMain = [
@@ -60,7 +63,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarContent>
       <SidebarFooter>
         <NavUser
-          user={{ name: t("guest"), email: "belum login" }}
+          user={user ?? { name: t("guest"), email: "Demo" }}
           labels={{ account: t("account"), logout: t("logout") }}
         />
       </SidebarFooter>

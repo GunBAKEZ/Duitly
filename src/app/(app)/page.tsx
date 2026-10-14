@@ -2,22 +2,20 @@ import Link from "next/link";
 import { getLocale, getTranslations } from "next-intl/server";
 import { ChartAreaInteractive } from "@/components/chart-area-interactive";
 import { SectionCards } from "@/components/section-cards";
-import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
 import { Card, CardAction, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
 import { formatDate, formatRupiah } from "@/lib/format";
-import { budget, costCategories, debts, goals, kpis, transactions } from "@/lib/mock-data";
+import { loadDashboard } from "@/lib/dashboard";
 
 export default async function DashboardPage() {
   const t = await getTranslations("dashboard");
-  const c = await getTranslations("common");
   const locale = await getLocale();
   const rp = (n: number) => formatRupiah(n, locale);
-  const dueSoon = debts.filter((d) => d.direction === "owe" && d.principal > d.paid).slice(0, 3);
-  const budgetPct = Math.round((budget.used / budget.limit) * 100);
-  const sortedCosts = [...costCategories].sort((a, b) => b.value - a.value);
+  const { kpis, daily, costs, recent, budget, goals, dueSoon, referenceDate } = await loadDashboard();
+  const budgetPct = budget ? Math.round((budget.used / budget.limit) * 100) : 0;
+  const sortedCosts = [...costs].sort((a, b) => b.value - a.value);
 
   return (
     <>
@@ -30,9 +28,10 @@ export default async function DashboardPage() {
         ]}
       />
 
-      <ChartAreaInteractive />
+      <ChartAreaInteractive data={daily} referenceDate={referenceDate} />
 
       <div className="grid gap-4 @3xl/main:grid-cols-2">
+        {budget && (
         <Card>
           <CardHeader>
             <CardTitle>{t("budget")}</CardTitle>
@@ -49,6 +48,7 @@ export default async function DashboardPage() {
             </div>
           </CardContent>
         </Card>
+        )}
 
         <Card>
           <CardHeader>
@@ -60,6 +60,7 @@ export default async function DashboardPage() {
             </CardAction>
           </CardHeader>
           <CardContent className="space-y-4">
+            {goals.length === 0 && <p className="text-sm text-muted-foreground">{t("noGoals")}</p>}
             {goals.map((g) => (
               <div key={g.name} className="space-y-1.5">
                 <div className="flex justify-between gap-2 text-sm">
@@ -85,7 +86,7 @@ export default async function DashboardPage() {
                 {dueSoon.map((d) => (
                   <TableRow key={d.id}>
                     <TableCell className="font-medium">{d.who}</TableCell>
-                    <TableCell className="text-muted-foreground">{formatDate(d.due, locale)}</TableCell>
+                    <TableCell className="text-muted-foreground">{d.due ? formatDate(d.due, locale) : "—"}</TableCell>
                     <TableCell className="text-right tabular-nums">{rp(d.installment)}</TableCell>
                   </TableRow>
                 ))}
@@ -125,13 +126,10 @@ export default async function DashboardPage() {
         <CardContent>
           <Table>
             <TableBody>
-              {transactions.slice(0, 5).map((tx) => (
+              {recent.map((tx) => (
                 <TableRow key={tx.id}>
                   <TableCell className="font-medium">{tx.name}</TableCell>
                   <TableCell className="text-muted-foreground">{formatDate(tx.date, locale)}</TableCell>
-                  <TableCell>
-                    <Badge variant="outline">{c(tx.status)}</Badge>
-                  </TableCell>
                   <TableCell className="text-right tabular-nums">
                     {tx.type === "income" ? "+" : "−"}
                     {rp(tx.amount)}

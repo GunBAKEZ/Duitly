@@ -6,7 +6,6 @@ import { useLocale, useTranslations } from "next-intl"
 
 import { useIsMobile } from "@/hooks/use-mobile"
 import { formatRupiah } from "@/lib/format"
-import { dailyCashflow, REFERENCE_DATE } from "@/lib/mock-data"
 import {
   Card,
   CardAction,
@@ -33,9 +32,13 @@ import {
   ToggleGroupItem,
 } from "@/components/ui/toggle-group"
 
-const chartData = dailyCashflow
-
-export function ChartAreaInteractive() {
+export function ChartAreaInteractive({
+  data: chartData,
+  referenceDate,
+}: {
+  data: { date: string; income: number; expense: number }[]
+  referenceDate: string
+}) {
   const t = useTranslations("dashboard")
   const c = useTranslations("common")
   const locale = useLocale()
@@ -55,14 +58,14 @@ export function ChartAreaInteractive() {
 
   const filteredData = chartData.filter((item) => {
     const date = new Date(item.date)
-    const referenceDate = new Date(REFERENCE_DATE)
+    const ref = new Date(referenceDate)
     let daysToSubtract = 90
     if (timeRange === "30d") {
       daysToSubtract = 30
     } else if (timeRange === "7d") {
       daysToSubtract = 7
     }
-    const startDate = new Date(referenceDate)
+    const startDate = new Date(ref)
     startDate.setDate(startDate.getDate() - daysToSubtract)
     return date >= startDate
   })
