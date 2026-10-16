@@ -198,7 +198,9 @@
     "invalid": "Email atau kata sandi salah.",
     "failed": "Terjadi kesalahan, coba lagi.",
     "minPassword": "Kata sandi minimal 8 karakter.",
-    "demoBanner": "Mode demo: data contoh, belum terhubung ke Supabase."
+    "demoBanner": "Mode demo: data contoh, belum terhubung ke Supabase.",
+    "exists": "Email ini sudah terdaftar. Silakan masuk.",
+    "rateLimit": "Terlalu banyak percobaan. Tunggu sebentar lalu coba lagi."
   },
   "quickAdd": {
     "title": "Tambah transaksi",

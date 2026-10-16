@@ -47,7 +47,14 @@ export async function signUp(_: AuthState, formData: FormData): Promise<AuthStat
       emailRedirectTo: `${await origin()}/auth/callback`,
     },
   });
-  if (error) return { error: "failed" };
+  if (error) {
+    if (error.code === "user_already_exists" || error.code === "email_exists") return { error: "exists" };
+    if (error.code === "over_email_send_rate_limit" || error.code === "over_request_rate_limit") return { error: "rateLimit" };
+    if (error.code === "weak_password") return { error: "minPassword" };
+    return { error: "failed" };
+  }
+  // Supabase menyamarkan email yang sudah ada saat konfirmasi email aktif: identities kosong.
+  if (data.user && data.user.identities?.length === 0) return { error: "exists" };
   if (data.session) redirect("/");
   return { message: "checkEmail" };
 }

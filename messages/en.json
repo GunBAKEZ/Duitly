@@ -198,7 +198,9 @@
     "invalid": "Wrong email or password.",
     "failed": "Something went wrong, try again.",
     "minPassword": "Password must be at least 8 characters.",
-    "demoBanner": "Demo mode: sample data, not connected to Supabase."
+    "demoBanner": "Demo mode: sample data, not connected to Supabase.",
+    "exists": "This email is already registered. Please log in.",
+    "rateLimit": "Too many attempts. Wait a moment and try again."
   },
   "quickAdd": {
     "title": "Add transaction",
